@@ -1,8 +1,5 @@
-selenium==4.3.0
-pandas==1.3.3
-sqlalchemy==1.4.22
-psycopg2==2.9.1
-boto3
-pytest
+pandas
+selenium
 python-dotenv
+snowflake-connector-python
 
