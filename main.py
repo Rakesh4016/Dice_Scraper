@@ -41,7 +41,7 @@ def main():
     except Exception as e:
         print(f"Failed to click 'Today' option: {e}")
         driver.quit()
-        return
+        raise RuntimeError(f"Could not select 'Today' filter: {e!s}")
 
     time.sleep(3) 
 
