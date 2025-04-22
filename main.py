@@ -2,6 +2,7 @@
 import time
 from datetime import datetime
 import pandas as pd
+import sys
 from driver_manager import restart_driver
 from scraper import scrape_job_details
 from database import insert_jobs_df_to_snowflake
@@ -16,6 +17,9 @@ from selenium.common.exceptions import (
 )
 
 load_dotenv()
+
+MAX_RETRIES = 5
+RETRY_DELAY  = 10 #seconds
 
 def main():
     start_time = time.time()
@@ -130,4 +134,17 @@ def main():
         print(f"Total time taken: {elapsed:.2f} seconds")
 
 if __name__ == "__main__":
-    main()
+    for attempt in range(1, MAX_RETRIES + 1):
+        try:
+            main()
+            print(f"✔ main() succeeded on attempt {attempt}.")
+            sys.exit(0)
+        except Exception as e:
+            print(f" main() failed on attempt {attempt}: {e}")
+            if attempt < MAX_RETRIES:
+                print(f"Retrying in {RETRY_DELAY}s…")
+                time.sleep(RETRY_DELAY)
+            else:
+                print(f"All {MAX_RETRIES} attempts failed—exiting.")
+                sys.exit(1)
+
