@@ -40,7 +40,8 @@ jobs:
             selenium>=4.8.0 \
             snowflake-connector-python \
             python-dotenv \
-            awscli
+            awscli \
+            webdriver-manager==3.8.5
 
       - name:  Install Chrome
         run: |
