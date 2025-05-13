@@ -67,6 +67,13 @@ jobs:
           conn.close()
           EOF
 
+      - name: Remove old chromedriver
+        run: |
+          sudo rm -f /usr/bin/chromedriver
+          # or, if installed via apt:
+          # sudo apt-get remove -y chromium-chromedriver
+    
+
       - name:  Run web scraper 
         run: python main.py
 
